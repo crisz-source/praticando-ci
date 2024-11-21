@@ -9,6 +9,7 @@ services:
       - ./postgres-data:/var/lib/postgresql/data
 
   app:
+    container_name: app
     image: golang:1.22
     command:
       - go
@@ -21,3 +22,9 @@ services:
       - 8080:8080
     depends_on:
       - postgres
+    environment:
+      - DB_HOST=postgres
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_NAME=root
+      - DB_PORT=5432
