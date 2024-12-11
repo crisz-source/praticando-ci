@@ -66,6 +66,6 @@ go: downloading github.com/pmezard/go-difflib v1.0.0
 ok      command-line-arguments  0.186s
 ``` 
 
-# GitHub Acitons
+# GitHub Actions
 Neste cenário de esteira, por ser uma aplicação feita em GO e é pequena. Imagina se tiver uma aplicação de alta escala, os Dev não vão poder fazer testes, rodar arquivos Makefile em suas máquinas... Pra isso, criei uma pipe line no **GitHub Acitons**
 - criando workflow
