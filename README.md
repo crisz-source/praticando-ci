@@ -68,4 +68,4 @@ ok      command-line-arguments  0.186s
 
 # GitHub Acitons
 Neste cenário de esteira, por ser uma aplicação feita em GO e é pequena. Imagina se tiver uma aplicação de alta escala, os Dev não vão poder fazer testes, rodar arquivos Makefile em suas máquinas... Pra isso, criei uma pipe line no **GitHub Acitons**
-Em contrução...
+- criando workflow
