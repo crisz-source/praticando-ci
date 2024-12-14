@@ -199,6 +199,4 @@ func TestBuscaAlunoPorIDHandler(t *testing.T) {
     pathDaBusca := "/alunos/" + strconv.Itoa(ID)
     req, _ := http.NewRequest("GET", pathDaBusca, nil)
     resposta := httptest.NewRecorder()
-    r.ServeHTTP(resposta, req)
-    var alunoMock models.Aluno
-    err := json
+}
