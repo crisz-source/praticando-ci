@@ -233,10 +233,19 @@ git commit -m "Usando actions de golangci-lint"
 git push origin pull_request
 ```
 
-- Criando variáveis de ambiente no github actions, para acessar o banco de dados durante a integração contínua
+- Criando variáveis de ambiente no github actions, para acessar o banco de dados durante a integração contínua, configurando as secrets..
 
+- Vá em settings > Secrets and variables (no menu lateral esquerdo) > Secrets > Repository secrets > New repository secret
 
+- Nas secrets, adicione as variaveis de ambiente do banco de dados, que neste caso é o **DB_HOST | DB_PASSWORD | DB_USER | DB_NAME | DB_PORT** e adicione os valores de cada um em **Secret**
 
+- Utilizando as variaveis de ambiente criada no github actions
+
+- foi adicionado em test pois durante a execução da integração, recebi o seguinte erro: **[error] failed to initialize database, got error cannot parse `host= user= *** dbname= port=`: invalid port** 
+```bash
+- name: Test
+      run: DB_HOST=${{ secrets.DB_HOST }} DB_PASSWORD=${{ secrets.DB_PASSWORD }} DB_USER=${{ secrets.DB_USER }} DB_NAME=${{ secrets.DB_NAME }} DB_PORT=${{ secrets.DB_PORT }} go test main_test.go
+```
 
 # Resumo de como funciona CI/CD
 - **Integração Contínua:** A integração contínua está mais focada na automação de builds e execução de testes automatizados (como testes unitários, de integração, etc.) sempre que um dev faz mudanças no código e envia para o repositório (por exemplo, usando Git). Caso haja erros nos testes ou na build, o processo é interrompido, e o time é notificado para corrigir os problemas antes de avançar.
