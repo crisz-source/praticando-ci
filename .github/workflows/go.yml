@@ -20,12 +20,23 @@ jobs:
       uses: actions/setup-go@v4
       with:
         go-version: '1.22'
+   
+    - name: Install Docker Compose
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker-compose
 
     - name: Inicia o banco de dados
       run: docker-compose up -d postgres
 
+    # - name: Lint
+    #   run: docker run --rm -itv $(pwd):/app -w /app golangci/golangci-lint golangci-lint run controllers/ database/ models/ routes/
+    
     - name: Lint
-      run: docker run --rm -itv $(CURDIR):/app -w /app golangci/golangci-lint golangci-lint run controllers/ database/ models/ routes/
+      uses: golangci/golangci-lint-action@v6
+      with:
+          version: v1.60
+          args: controllers/ database/ models/ routes/
 
     - name: Test
-      run: go test main_test.go
+      run: DB_HOST=${{ secrets.DB_HOST }} DB_PASSWORD=${{ secrets.DB_PASSWORD }} DB_USER=${{ secrets.DB_USER }} DB_NAME=${{ secrets.DB_NAME }} DB_PORT=${{ secrets.DB_PORT }} go test main_test.go
