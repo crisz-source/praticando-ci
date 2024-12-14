@@ -233,6 +233,9 @@ git commit -m "Usando actions de golangci-lint"
 git push origin pull_request
 ```
 
+- Criando variáveis de ambiente no github actions, para acessar o banco de dados durante a integração contínua
+
+
 
 
 # Resumo de como funciona CI/CD
