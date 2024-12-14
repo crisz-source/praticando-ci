@@ -66,7 +66,7 @@ go: downloading github.com/pmezard/go-difflib v1.0.0
 ok      command-line-arguments  0.186s
 ``` 
 
-# GitHub Actions
+# GitHub Actions - Integração contínua
 Neste cenário de esteira, por ser uma aplicação feita em GO e é pequena. Imagina se tiver uma aplicação de alta escala, os Dev não vão poder fazer testes, rodar arquivos Makefile em suas máquinas... Pra isso, criei uma pipe line no **GitHub Acitons**
 - **criando workflow:** Acessando o repositório, clique em **actions** e pesquise por **Go**, selecione no canto esquerdo **Continuous integration** e clique em **configure** para inicializar a configuração de pipeline, um template.. Exemplo do que vai ser criado:
 ```bash
@@ -245,6 +245,23 @@ git push origin pull_request
 ```bash
 - name: Test
       run: DB_HOST=${{ secrets.DB_HOST }} DB_PASSWORD=${{ secrets.DB_PASSWORD }} DB_USER=${{ secrets.DB_USER }} DB_NAME=${{ secrets.DB_NAME }} DB_PORT=${{ secrets.DB_PORT }} go test main_test.go
+```
+- Com isso feito, a integração continua vai ser feita com sucesso e pronta para integrar com a branch principal
+- Realizando o merge, clique em **Pull requestss** vá no pull request criado, depois clique em **Merge pull request** e **Confirm merge**
+- depois que fazer o merge, o processo do job CI vai fazer tambem na branch main, por conta disso:
+```bash
+push:
+    branches: [ "main" ] # <--------
+  pull_request:
+    branches: [ "main" ]
+```
+- Caso queira que o job ci seja feito apenas na branch pull request, basta apenas remover ou comentar a branche main
+
+```bash
+push:
+   # branches: [ "main" ] # <--------
+  pull_request:
+    branches: [ "main" ]
 ```
 
 # Resumo de como funciona CI/CD
