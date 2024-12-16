@@ -46,39 +46,7 @@ jobs:
     
   # cd: # cd para kubernetes
   #   needs: ci
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - name: Checkout Code
-  #     uses: actions/checkout@v4
-
-  #       # Incrementa a versão da imagem
-  #   - name: versao da imagem
-  #     id: bump_version
-  #     uses: phips28/gh-action-bump-version@v10
-  #     with:
-  #         default: patch  # Pode ser major, minor ou patch (0.0.0)
-
-  
-  #     # Login no Docker Hub
-  #   - name: Login no Docker Hub
-  #     env:
-  #       DOCKER_HUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-  #       DOCKER_HUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
-  #     run: |
-  #         echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
-
-  #     # Build da imagem Docker com a versão gerada
-  #   - name: Build da imagem php-prod
-  #     run: | 
-  #       docker build -t $DOCKER_HUB_USERNAME/images:php-prod${{ steps.bump_version.outputs.new_version }} -f caminho/para/o/Dockerfile .
-
-  #     # Push da imagem Docker para o registry
-  #   - name: Push para o Docker Hub
-  #     env:
-  #       DOCKER_HUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-  #       DOCKER_HUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
-  #     run: |
-  #         docker push $DOCKER_HUB_USERNAME/images:php-prod${{ steps.bump_version.outputs.new_version }}
+ 
        
   #     # iniciando a conexão ao cluster kubernetes
   #   - name: Setup Kubectl
