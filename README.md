@@ -170,12 +170,20 @@ jobs:
 - **Rules:** Desmarque a opção **Restrict deletions** e marque a opção **Require a pull request before merging** para exigir que um pull request seja feito antes de fazer um merge, em **Required approvals** deixe 0, se a organização tiver mais pessoas é interessante marcar 1 ou mais pessoas para autorizar o pull request, marque a opção 
 **Require status checks to pass** para garantir que **pull request** seja feito apenas se a verificação do **ci** for **concluída**: Clique em Add checks > -digite o nome do job- > selecione o job. Deixe marcado a opção **Block force pushes** e por fim, clique em **create** se retornar a mensagem: **Ruleset created** deu tudo certo, a partir de agora, não é possível fazer um push diretamente na main, será necessário realizar um pull request e este pull request só vai ser com **sucesso** se o job **ci** for **concluído** com sucesso
 
-## 
-### Testando as restrições
 - crie uma nova branch e mude para ela
 ```bash
 git switch -c pull_request
 ```
+
+- com essa alteração, adicionei essas modificação no meu repositorio na branch pull_request
+```bash
+git add .github/
+git commit -m "Correção do lint"
+git push origin pull_request
+```
+
+## 
+### Testando as restrições
 - Note que no código acima em go.yaml esta da seguinte maneira:
 ```bash
 run: docker run --rm -itv $(CURDIR):/app -w /app golangci/golangci-lint golangci-lint run controllers/ database/ models/ routes/
@@ -184,20 +192,19 @@ run: docker run --rm -itv $(CURDIR):/app -w /app golangci/golangci-lint golangci
 ```bash
 run: docker run --rm -itv $(pwd):/app -w /app golangci/golangci-lint golangci-lint run controllers/ database/ models/ routes/
 ```
-- com essa alteração, adicionei essas modificação no meu repositorio na branch pull_request
-```bash
-git add .github/
-git commit -m "Correção do lint"
-git push origin pull_request
-```
-
 ### Executando a pipeline
 - Criando pull request para fazer merge na branch main, e só vai fazer o merge se o **status** do job **ci** for **concluído**
+
 - **Pull request:**  Entre no seu repositório, se aparecer a seguinte mensagem: **pull_request had recent pushes 4 minutes ago** **clique em Compare & pull request** se não apareceu, clique em Pull request > New pull request
+
 - na pagina **Open a pull request** em base, selecione a branch principal, pois a branch pull request vai comparar com a main e fazer um merge
+
 - Pode verificar o que foi mudado descendo um pouco a baixo da pagina
+
 - Clique em **Create pull request**
+
 - Note que o pull request vai começar a fazer alguns checkes e executar o **job ci**
+
 - Durante a execução, o proprio job ci me informou o seguinte erro: **/home/runner/work/_temp/6814968e-30bd-4a48-8fef-8acc4a3dca77.sh: line 1: docker-compose: command not found** ou seja, o docker-compose não está instalado no servidor github actions, neste caso adicionei um passo para realizar a instalação do docker-compose antes de iniciar o banco de dados
 ```bash
 - name: Install Docker Compose
@@ -246,8 +253,11 @@ git push origin pull_request
 - name: Test
       run: DB_HOST=${{ secrets.DB_HOST }} DB_PASSWORD=${{ secrets.DB_PASSWORD }} DB_USER=${{ secrets.DB_USER }} DB_NAME=${{ secrets.DB_NAME }} DB_PORT=${{ secrets.DB_PORT }} go test main_test.go
 ```
+
 - Com isso feito, a integração continua vai ser feita com sucesso e pronta para integrar com a branch principal
+
 - Realizando o merge, clique em **Pull requestss** vá no pull request criado, depois clique em **Merge pull request** e **Confirm merge**
+
 - depois que fazer o merge, o processo do job CI vai fazer tambem na branch main, por conta disso:
 ```bash
 push:
